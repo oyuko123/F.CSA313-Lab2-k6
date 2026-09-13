@@ -17,7 +17,14 @@
 - **Git / GitHub:** Source code болон үр дүнг хадгалах
 - **JavaScript:** k6 test script болон Express server
 
-## 3. Baseline performance test
+## 3. k6 version
+
+```text
+$ k6 version
+k6 v2.2.0 (commit/00a9a1b7f5, go1.26.5, linux/amd64)
+```
+
+## 4. Baseline performance test
 
 Эхний туршилтаар https://test.k6.io веб сайтыг 5 VU ашиглан 1 минутын хугацаанд тестэлсэн.
 
@@ -25,7 +32,7 @@ Baseline тестийн p95 утга: 300.71 ms
 
 Энэ утгыг дараагийн SLO threshold тодорхойлоход baseline болгон ашигласан.
 
-## 4. Өөр өөр VU түвшний гүйцэтгэл
+## 5. Өөр өөр VU түвшний гүйцэтгэл
 
 5, 30 болон 100 VU түвшинд тус тусад нь 1 минутын туршилт хийсэн.
 
@@ -37,7 +44,7 @@ Baseline тестийн p95 утга: 300.71 ms
 
 Бүх туршилтын үед error rate 0.00% байсан. 100 VU үед throughput хамгийн өндөр буюу 145.5230 req/s хүрсэн.
 
-## 5. Staged load test
+## 6. Staged load test
 
 Staged load test ашиглан ачааллыг дараах байдлаар өөрчилсөн:
 
@@ -54,7 +61,7 @@ Staged load test ашиглан ачааллыг дараах байдлаар �
 | Throughput  | 46.7626 req/s |
 | Error rate  |         0.00% |
 
-## 6. SLO болон Threshold
+## 7. SLO болон Threshold
 
 Baseline туршилтын p95: 300.71 ms
 
@@ -81,7 +88,7 @@ error rate = 0.00%
 
 Иймээс SLO шаардлагыг хангасан.
 
-## 7. Local Express server test
+## 8. Local Express server test
 
 Мөн локал орчинд Express.js сервер үүсгэж performance test хийсэн.
 
@@ -97,7 +104,7 @@ Server: http://localhost:3000
 | Throughput | 29.8841 req/s |
 | Error rate |         0.00% |
 
-## 8. Slow endpoint test
+## 9. Slow endpoint test
 
 Системийн server-side delay performance-д хэрхэн нөлөөлөхийг харахын тулд /slow endpoint үүсгэсэн.
 
@@ -115,6 +122,6 @@ Server: http://localhost:3000
 
 Энгийн локал endpoint-ийн p95 нь 7.16 ms байсан бол slow endpoint-ийн p95 нь 107.21 ms болсон. Өөрөөр хэлбэл ойролцоогоор 100 ms-ийн нэмэлт server delay нь response time-д шууд нөлөөлсөн.
 
-## 9. Дүгнэлт
+## 10. Дүгнэлт
 
 Энэ лабораторийн ажлаар k6 ашиглан веб системийн гүйцэтгэлийг өөр өөр ачааллын түвшинд хэмжиж үзсэн. 5, 30 болон 100 VU үед хийсэн туршилтуудаар бүх request амжилттай боловсруулагдаж, error rate 0.00% байсан. 100 VU үед throughput 145.5230 req/s болж хамгийн өндөр үзүүлэлттэй байсан боловч response time нь 5 VU-тэй харьцуулахад заавал өсөөгүй нь тухайн веб сервер болон сүлжээний нөхцөлөөс хамаарч байгааг харсан. Staged load test-ээр ачааллыг 5-аас 100 VU хүртэл үе шаттай нэмэгдүүлж, дараа нь бууруулах үед системийн ерөнхий гүйцэтгэлийг хэмжсэн. Baseline-ийн p95 болох 300.71 ms утгыг ашиглан SLO threshold-ийг 451.07 ms гэж тодорхойлсон. Зориудаар 50 ms гэсэн хэт бага threshold тавихад test амжилтгүй болж, k6 threshold failure үүсгэсэн. Харин 451.07 ms threshold-ийг сэргээхэд p95 нь 294.21 ms гарч SLO шаардлагыг хангасан. Мөн локал Express серверийг туршихад p95 нь ердөө 7.16 ms байсан нь гадаад веб сервертэй харьцуулахад network latency-ийн нөлөөг харуулсан. /slow endpoint-д 100 ms delay нэмэхэд p95 нь 107.21 ms болж өссөн бөгөөд throughput мөн 27.1535 req/s хүртэл буурсан. Иймээс k6 нь системийн ачаалал, response time, throughput болон reliability-г хэмжихээс гадна тодорхой SLO шаардлагыг автоматаар шалгахад ашиглах боломжтой хэрэгсэл болохыг туршилтаар харсан.
