@@ -7,7 +7,7 @@ export const options = {
 };
 
 export default function () {
-    const res = http.get('http://localhost:3000');
+    const res = http.get('http://localhost:3000/slow');
 
     check(res, {
         'status 200 байна': (r) => r.status === 200,
